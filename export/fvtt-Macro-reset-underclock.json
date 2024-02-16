@@ -1,0 +1,22 @@
+{
+  "name": "Reset Underclock",
+  "type": "script",
+  "scope": "global",
+  "img": "icons/magic/light/circle-window-clock-blue.webp",
+  "command": "if (!(clock = game.actors.find((actor) => actor.name === \"Underclock\"))) {\n  ui.notifications.warn(\"There is no Underclock to reset.\");\n  return;\n}\n\nclock.setFlag(\"world\", \"clockValue\", 20)\n\nChatMessage.create({content: \"The Underclock has been reset to <b>20</b>.\"})",
+  "flags": {
+    "core": {},
+    "exportSource": {
+      "system": "ose",
+      "coreVersion": "11.315",
+      "systemVersion": "1.10.1"
+    }
+  },
+  "_stats": {
+    "systemId": "ose",
+    "systemVersion": "1.10.1",
+    "coreVersion": "11.315",
+    "createdTime": 1708098637882,
+    "modifiedTime": 1708100554163
+  }
+}

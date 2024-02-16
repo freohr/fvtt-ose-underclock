@@ -1,0 +1,22 @@
+{
+  "name": "Show Underclock",
+  "type": "script",
+  "scope": "global",
+  "img": "icons/magic/time/clock-stopwatch-white-blue.webp",
+  "command": "if (!(clock = game.actors.find((actor) => actor.name === \"Underclock\"))) {\n  ui.notifications.warn(\"There is no Underclock to show.\");\n  return;\n}\n\nChatMessage.create({content: `The Underclock is currently at <b>${clock.getFlag(\"world\", \"clockValue\")}</b>.`})",
+  "flags": {
+    "core": {},
+    "exportSource": {
+      "system": "ose",
+      "coreVersion": "11.315",
+      "systemVersion": "1.10.1"
+    }
+  },
+  "_stats": {
+    "systemId": "ose",
+    "systemVersion": "1.10.1",
+    "coreVersion": "11.315",
+    "createdTime": 1708100180862,
+    "modifiedTime": 1708100554163
+  }
+}

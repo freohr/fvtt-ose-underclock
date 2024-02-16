@@ -1,0 +1,22 @@
+{
+  "name": "Advance Underclock",
+  "type": "script",
+  "scope": "global",
+  "img": "icons/magic/time/clock-spinning-gold-pink.webp",
+  "command": "async function initUnderclock() {\n  const clock = await Actor.create({\n    name: \"Underclock\",\n    type: \"monster\",\n    img: \"icons/magic/time/clock-spinning-gold-pink.webp\",\n    prototypeToken: {\n      name: \"Underclock\",\n      texture: { src: \"icons/magic/time/clock-spinning-gold-pink.webp\" },\n    },\n    flags: {\n      world: {\n        clockDie: \"d6x6+1\",\n        clockValue: 20,\n      },\n    },\n  });\n\n  return clock;\n}\n\nasync function getClockActor() {\n  if (!(clock = game.actors.find((actor) => actor.name === \"Underclock\"))) {\n    clock = await initUnderclock();\n  }\n\n  return clock;\n}\n\nasync function rollUnderclock(clockDie) {\n  const rollResult = await new Roll(clockDie).roll();\n\n  return rollResult.total;\n}\n\nasync function advanceUnderclock() {\n  const clock = await getClockActor();\n\n  const advanceRoll = await new Roll(clock.getFlag(\"world\", \"clockDie\"));\n  await advanceRoll.roll();\n  \n  const advancedClockValue =\n    clock.getFlag(\"world\", \"clockValue\") - advanceRoll.total;\n\n  let clockMessage = `Clock roll: <b>${advanceRoll.total}</b></br>The Underclock is now at: <b>${advancedClockValue}</b>`;\n  let resetClock = false\n\n  if (advancedClockValue == 3 || advancedClockValue == 0) {\n    clockMessage += \"<br/>You spot something about the next Encounter!\";\n    resetClock = true\n  }\n\n  if (advancedClockValue < 0) {\n    clockMessage += \"<br/>You encounter something!\";\n    resetClock = true\n  } \n\n  if (resetClock) {\n    clock.setFlag(\"world\", \"clockValue\", 20);\n  } else {\n    clock.setFlag(\"world\", \"clockValue\", advancedClockValue);\n  }\n\n  advanceRoll.toMessage({flavor: clockMessage})\n}\n\nadvanceUnderclock();",
+  "flags": {
+    "core": {},
+    "exportSource": {
+      "system": "ose",
+      "coreVersion": "11.315",
+      "systemVersion": "1.10.1"
+    }
+  },
+  "_stats": {
+    "systemId": "ose",
+    "systemVersion": "1.10.1",
+    "coreVersion": "11.315",
+    "createdTime": 1708089497203,
+    "modifiedTime": 1708100554163
+  }
+}
